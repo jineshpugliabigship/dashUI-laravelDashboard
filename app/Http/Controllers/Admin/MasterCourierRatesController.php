@@ -17,6 +17,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
+
+
 class MasterCourierRatesController extends Controller
 {
     use HasRoles;
@@ -74,6 +76,7 @@ class MasterCourierRatesController extends Controller
 
         DB::beginTransaction();
         try {
+
             Excel::import(new MasterCourierRatesImport, $request->file('file_upload'));
             DB::commit();
             return back()->with('success', 'Rates imported successfully.');

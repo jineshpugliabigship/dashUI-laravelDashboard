@@ -6,48 +6,60 @@ use App\Models\MasterCourierRates;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class MasterCourierRatesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
         try {
-            return MasterCourierRates::create(
-                [
-                    'MasterRateTypeId' => $row['masterratetypeid'],
-                    'MasterCourierShipmentType' => $row['mastercouriershipmenttype'],
-                    'zone_A' => $row['zone_a'] ?? 0.00,
-                    'zone_B' => $row['zone_b'] ?? 0.00,
-                    'zone_C' => $row['zone_c'] ?? 0.00,
-                    'zone_D' => $row['zone_d'] ?? 0.00,
-                    'zone_E' => $row['zone_e'] ?? 0.00,
-                    'zone_F' => $row['zone_f'] ?? 0.00,
-                    'zone_G' => $row['zone_g'] ?? 0.00,
-                    'zone_H' => $row['zone_h'] ?? 0.00,
-                    'zone_I' => $row['zone_i'] ?? 0.00,
-                    'zone_J' => $row['zone_j'] ?? 0.00,
-                    'zone_K' => $row['zone_k'] ?? 0.00,
-                    'zone_L' => $row['zone_l'] ?? 0.00,
-                    'zone_M' => $row['zone_m'] ?? 0.00,
-                    'zone_N' => $row['zone_n'] ?? 0.00,
-                    'zone_O' => $row['zone_o'] ?? 0.00,
-                    'zone_P' => $row['zone_p'] ?? 0.00,
-                    'zone_Q' => $row['zone_q'] ?? 0.00,
-                    'zone_R' => $row['zone_r'] ?? 0.00,
-                    'zone_S' => $row['zone_s'] ?? 0.00,
-                    'zone_T' => $row['zone_t'] ?? 0.00,
-                    'zone_U' => $row['zone_u'] ?? 0.00,
-                    'zone_V' => $row['zone_v'] ?? 0.00,
-                    'zone_W' => $row['zone_w'] ?? 0.00,
-                    'zone_X' => $row['zone_x'] ?? 0.00,
-                    'zone_Y' => $row['zone_y'] ?? 0.00,
-                    'zone_Z' => $row['zone_z'] ?? 0.00,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+
+            if ($row['masterratetypeid'] == null) {
+                return null;
+            }
+            $data = new MasterCourierRates([
+                'MasterRateTypeId' => $row['masterratetypeid'] ?? null,
+                'MasterCourierShipmentType' => $row['mastercouriershipmenttype'] ?? null,
+                'zone_A' => $row['zone_a'] == "NULL" ? 0.00 : $row['zone_a'],
+                'zone_B' => $row['zone_b'] == "NULL" ? 0.00 : $row['zone_b'],
+                'zone_C' => $row['zone_c'] == "NULL" ? 0.00 : $row['zone_c'],
+                'zone_D' => $row['zone_d'] == "NULL" ? 0.00 : $row['zone_d'],
+                'zone_E' => $row['zone_e'] == "NULL" ? 0.00 : $row['zone_e'],
+                'zone_F' => $row['zone_f'] == "NULL" ? 0.00 : $row['zone_f'],
+                'zone_G' => $row['zone_g'] == "NULL" ? 0.00 : $row['zone_g'],
+                'zone_H' => $row['zone_h'] == "NULL" ? 0.00 : $row['zone_h'],
+                'zone_I' => $row['zone_i'] == "NULL" ? 0.00 : $row['zone_i'],
+                'zone_J' => $row['zone_j'] == "NULL" ? 0.00 : $row['zone_j'],
+                'zone_K' => $row['zone_k'] == "NULL" ? 0.00 : $row['zone_k'],
+                'zone_L' => $row['zone_l'] == "NULL" ? 0.00 : $row['zone_l'],
+                'zone_M' => $row['zone_m'] == "NULL" ? 0.00 : $row['zone_m'],
+                'zone_N' => $row['zone_n'] == "NULL" ? 0.00 : $row['zone_n'],
+                'zone_O' => $row['zone_o'] == "NULL" ? 0.00 : $row['zone_o'],
+                'zone_P' => $row['zone_p'] == "NULL" ? 0.00 : $row['zone_p'],
+                'zone_Q' => $row['zone_q'] == "NULL" ? 0.00 : $row['zone_q'],
+                'zone_R' => $row['zone_r'] == "NULL" ? 0.00 : $row['zone_r'],
+                'zone_S' => $row['zone_s'] == "NULL" ? 0.00 : $row['zone_s'],
+                'zone_T' => $row['zone_t'] == "NULL" ? 0.00 : $row['zone_t'],
+                'zone_U' => $row['zone_u'] == "NULL" ? 0.00 : $row['zone_u'],
+                'zone_V' => $row['zone_v'] == "NULL" ? 0.00 : $row['zone_v'],
+                'zone_W' => $row['zone_w'] == "NULL" ? 0.00 : $row['zone_w'],
+                'zone_X' => $row['zone_x'] == "NULL" ? 0.00 : $row['zone_x'],
+                'zone_Y' => $row['zone_y'] == "NULL" ? 0.00 : $row['zone_y'],
+                'zone_Z' => $row['zone_z'] == "NULL" ? 0.00 : $row['zone_z'],
+                'created_at' => now(),
+
+                'updated_at' => now(),
+            ]);
+            // dd($data);
+            $data->save();
+
+            return $data;
         } catch (\Exception $e) {
-            Log::error('Row Import Error: ' . $e->getMessage() . ' | Row Data: ' . json_encode($row));
+            Log::error('Row Import Error: ' . $e->getMessage(), [
+                'row_data' => $row,
+                'trace' => $e->getTraceAsString()
+            ]);
             return null; // Skip failed rows
         }
     }
