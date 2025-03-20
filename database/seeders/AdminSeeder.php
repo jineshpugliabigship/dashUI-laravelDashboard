@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,43 +15,64 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $superAdmin = User::create([
-            'name' => 'SuperAdmin DashUI',
-            'email' => 'superadmin@dashui.dev',
-            'password'  => Hash::make('password'),
-            'is_active' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
+        $superAdmin = User::updateOrCreate(
+            ['email' => 'superadmin@dashui.dev'], // Prevent duplicates
+            [
+                'name' => 'SuperAdmin DashUI',
+                'username' => 'superadmin', // Ensure username is set
+                'email' => 'superadmin@dashui.dev',
+                'password' => Hash::make('password'),
+                'is_active' => '1',
+                'phone' => '12345678901', // Provide a unique phone number
 
-        ]);
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
 
-        $admin = User::create([
-            'name' => 'Admin DashUI',
-            'email' => 'admin@dashui.dev',
-            'password'  => Hash::make('password'),
-            'is_active' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@dashui.dev'],
+            [
+                'name' => 'Admin DashUI',
+                'username' => 'admin',
+                'email' => 'admin@dashui.dev',
+                'password' => Hash::make('password'),
+                'is_active' => '1',
+                'phone' => '1234567890', // Provide a unique phone number
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
 
-        $manager = User::create([
-            'name' => 'Manager DashUI',
-            'email' => 'manager@dashui.dev',
-            'password'  => Hash::make('password'),
-            'is_active' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        $manager = User::updateOrCreate(
+            ['email' => 'manager@dashui.dev'],
+            [
+                'name' => 'Manager DashUI',
+                'username' => 'manager',
+                'email' => 'manager@dashui.dev',
+                'password' => Hash::make('password'),
+                'is_active' => '1',
+                'phone' => '123456789', // Provide a unique phone number
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
 
-        $user = User::create([
-            'name' => 'Mutant',
-            'email' => 'mutant@dashui.dev',
-            'password'  => Hash::make('password'),
-            'is_active' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        $user = User::updateOrCreate(
+            ['email' => 'mutant@dashui.dev'],
+            [
+                'name' => 'Mutant',
+                'username' => 'mutant',
+                'email' => 'mutant@dashui.dev',
+                'password' => Hash::make('password'),
+                'is_active' => '1',
+                'phone' => '12345678', // Provide a unique phone number
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
 
+        // Assign roles
         $superAdmin->assignRole('SuperAdmin');
         $admin->assignRole('Admin');
         $manager->assignRole('Manager');

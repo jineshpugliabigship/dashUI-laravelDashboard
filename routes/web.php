@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Index;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\MasterCourierRatesController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -38,20 +39,29 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
     'prefix'     => 'admin',
     'as'         => 'admin.'
-    ], function() {
+], function () {
     Route::get('/', [Index::class, 'index'])->name('dashboard');
 
     Route::resource('profile', 'ProfileController');
     Route::patch('profile/{user}/passUpdate', [ProfileController::class, 'passUpdate'])->name('profile.passUpdate');
     Route::patch('profile/{user}/othersUpdate', [ProfileController::class, 'othersUpdate'])->name('profile.othersUpdate');
 
-    Route::resource('roles','RoleController');
-    Route::resource('permissions','PermissionController');
+    Route::resource('roles', 'RoleController');
+    Route::resource('permissions', 'PermissionController');
+    // Route::resource('mastercourierrates', 'MasterCourierRatesController');
+    // Route::post('mastercourierrates/upload', [MasterCourierRatesController::class, 'upload'])->name('mastercourierrates.upload');
 
-    Route::resource('users','UserController');
+    // Route::resource('rateCards','RateCardController')->name('rate.cards');
+
+
+    Route::resource('users', 'UserController');
     Route::patch('users/{user}/passUpdate', [UserController::class, 'passUpdate'])->name('users.passUpdate');
     Route::patch('users/{user}/othersUpdate', [UserController::class, 'othersUpdate'])->name('users.othersUpdate');
 
+    Route::resource('mastercourierrates', 'MasterCourierRatesController');
+    // Route::patch('mastercourierrates/{user}/passUpdate', [MasterCourierRatesController::class, 'passUpdate'])->name('mastercourierrates.passUpdate');
+    // Route::patch('mastercourierrates/{user}/othersUpdate', [MasterCourierRatesController::class, 'othersUpdate'])->name('mastercourierrates.othersUpdate');
+    Route::post('mastercourierrates/import', [MasterCourierRatesController::class, 'import'])->name('mastercourierrates.import');
 });
 
 

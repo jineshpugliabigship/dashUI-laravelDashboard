@@ -16,10 +16,10 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name'=>'SuperAdmin']);
-        Role::create(['name'=>'Admin']);
-        Role::create(['name'=>'Manager']);
-        Role::create(['name'=>'User']);
+        Role::create(['name' => 'SuperAdmin']);
+        Role::create(['name' => 'Admin']);
+        Role::create(['name' => 'Manager']);
+        Role::create(['name' => 'User']);
 
         $permission = Permission::create(['name' => 'AdminPanel access']);
         $permission->assignRole('Admin');

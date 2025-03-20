@@ -69,6 +69,17 @@
                     <span class="nav-link-text ms-1">Permissions</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ (Request::is(['admin/mastercourierrates','admin/mastercourierrates/*']) ? 'active' : '') }} " href="{{ route('admin.mastercourierrates.index') }}">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path class="color-background opacity-6" d="M17.5 11.75a4.75 4.75 0 1 1-4.507 6.253h-1.986A4.752 4.752 0 0 1 1.75 16.5a4.75 4.75 0 0 1 9.474-.5h1.552a4.75 4.75 0 0 1 4.724-4.25Zm-11 2a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Zm11 0a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5ZM15.512 3a2.75 2.75 0 0 1 2.634 1.96l1.006 3.35a35.87 35.87 0 0 1 2.327.467 1 1 0 1 1-.458 1.946c-2.756-.648-5.762-.973-9.021-.973-3.259 0-6.265.325-9.021.973a1 1 0 0 1-.458-1.946 35.87 35.87 0 0 1 2.326-.466L5.854 4.96A2.75 2.75 0 0 1 8.488 3h7.024Z" fill="#212121"/>
+                            <path class="color-background" d="M17.5 11.75a4.75 4.75 0 1 1-4.507 6.253h-1.986A4.752 4.752 0 0 1 1.75 16.5a4.75 4.75 0 0 1 9.474-.5h1.552a4.75 4.75 0 0 1 4.724-4.25Zm-11 2a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Zm11 0a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5ZM15.512 3a2.75 2.75 0 0 1 2.634 1.96l1.006 3.35a35.87 35.87 0 0 1 2.327.467 1 1 0 1 1-.458 1.946c-2.756-.648-5.762-.973-9.021-.973-3.259 0-6.265.325-9.021.973a1 1 0 0 1-.458-1.946 35.87 35.87 0 0 1 2.326-.466L5.854 4.96A2.75 2.75 0 0 1 8.488 3h7.024Z" fill="#212121"/>
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Master Courier Rates</span>
+                </a>
+            </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Sidebar Section Header</h6>
             </li>
