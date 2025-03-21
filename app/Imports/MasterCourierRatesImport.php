@@ -27,7 +27,7 @@ class MasterCourierRatesImport implements ToModel, WithHeadingRow
                 $zones = [];
                 foreach (range('A', 'Z') as $zone) {
                     $key = 'zone_' . strtolower($zone);
-                    $zones['zone_' . $zone] = (!empty($row[$key]) && strtoupper($row[$key]) !== "NULL") ? $row[$key] . ".00" : "0.00";
+                    $zones['zone_' . $zone] = (!empty($row[$key]) && strtoupper($row[$key]) !== "NULL") ? $row[$key] : 0.00;
                 }
 
                 if ($record) {

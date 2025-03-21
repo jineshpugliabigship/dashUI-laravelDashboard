@@ -17,6 +17,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 class MasterCourierRatesController extends Controller
@@ -36,15 +38,64 @@ class MasterCourierRatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all master courier rates
-        $masterCourierRates = MasterCourierRates::all();
+        $query = Mastercourierrates::query();
 
-        // Fetch users excluding SuperAdmin
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('MasterCourierPackageId', 'like', "%{$search}%")
+                ->orWhere('MasterRateTypeId', 'like', "%{$search}%")
+                ->orWhere('MasterCourierShipmentType', 'like', "%{$search}%");
+        }
+
+        $masterCourierRates = $query->paginate(25);
 
         return view('admin.mastercourierrates.index', compact('masterCourierRates'));
     }
+
+
+
+    public function export()
+    {
+        $fileName = 'master_courier_rates.csv';
+
+        return response()->stream(function () {
+            $handle = fopen('php://output', 'w');
+
+            // CSV Header Row
+            fputcsv($handle, [
+                'MasterCourierPackageId',
+                'MasterRateTypeId',
+                'MasterCourierShipmentType',
+                ...array_map(fn($z) => "Zone $z", range('A', 'Z')),
+                'Created At',
+                'Updated At',
+                'Deleted At'
+            ]);
+
+            // Fetch Data
+            $rates = MasterCourierRates::all();
+
+            foreach ($rates as $rate) {
+                fputcsv($handle, [
+                    $rate->MasterCourierPackageId,
+                    $rate->MasterRateTypeId,
+                    $rate->MasterCourierShipmentType,
+                    ...array_map(fn($z) => $rate['zone_' . $z] ?? 'N/A', range('A', 'Z')),
+                    $rate->created_at,
+                    $rate->updated_at,
+                    $rate->deleted_at ?? 'N/A',
+                ]);
+            }
+
+            fclose($handle);
+        }, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

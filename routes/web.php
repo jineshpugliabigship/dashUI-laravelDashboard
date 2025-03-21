@@ -62,6 +62,7 @@ Route::group([
     // Route::patch('mastercourierrates/{user}/passUpdate', [MasterCourierRatesController::class, 'passUpdate'])->name('mastercourierrates.passUpdate');
     // Route::patch('mastercourierrates/{user}/othersUpdate', [MasterCourierRatesController::class, 'othersUpdate'])->name('mastercourierrates.othersUpdate');
     Route::post('mastercourierrates/import', [MasterCourierRatesController::class, 'import'])->name('mastercourierrates.import');
+    Route::get('mastercourierrates/export', [MasterCourierRatesController::class, 'export'])->name('mastercourierrates.export');
 });
 
 
