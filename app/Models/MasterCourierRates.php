@@ -12,11 +12,12 @@ class MasterCourierRates extends Model
 
     protected $table = 'MasterCourierRates'; // Specify table name if different from convention
 
-    protected $primaryKey = 'MasterCourierPackageId'; // Specify the primary key
+    protected $primaryKey = 'id'; // Specify the primary key
 
     public $timestamps = true; // Enable timestamps
 
     protected $fillable = [
+        'id',
         'MasterCourierPackageId',
         'MasterRateTypeId',
         'MasterCourierShipmentType',

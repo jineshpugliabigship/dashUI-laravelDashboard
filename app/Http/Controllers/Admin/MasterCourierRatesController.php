@@ -38,19 +38,12 @@ class MasterCourierRatesController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        // Fetch all master courier rates
+        $masterCourierRates = MasterCourierRates::all();
 
-        foreach ($users as $user) {
-            foreach ($user->roles as $role) {
-                if ($role->name == 'SuperAdmin') {
-                    $adminId = $user->id;
-                }
-            }
-        }
+        // Fetch users excluding SuperAdmin
 
-        $users = User::whereNotIn('id', [$adminId])->get();
-
-        return view('admin.mastercourierrates.index', compact('users'));
+        return view('admin.mastercourierrates.index', compact('masterCourierRates'));
     }
 
     /**
